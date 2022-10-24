@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.firebase.Modelo.Alumno;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -52,16 +53,14 @@ public class MainActivity extends AppCompatActivity {
                 etEdad = (EditText) findViewById(R.id.etEdad);
                 String nombre = etNombre.getText().toString();
                 String apellido = etApellido.getText().toString();
-                String edad = etEdad.getText().toString();
+                int edad = Integer.parseInt(etEdad.getText().toString());
                 String key= UUID.randomUUID().toString();
 
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = database.getReference("alumno").child(nombre);
-                myRef.child("nombre").setValue(nombre);
-                myRef.child("apellido").setValue(apellido);
-                myRef.child("edad").setValue(edad);
-                Toast.makeText(MainActivity.this, "ssss", Toast.LENGTH_SHORT).show();
+                Alumno a = new Alumno(nombre, apellido,edad);
 
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference myRef = database.getReference("alumno");
+                myRef.setValue(a);
 
             }
         });
